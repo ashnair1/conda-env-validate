@@ -1,4 +1,4 @@
-name: validate conda environment
+name: validate
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   env_validate:
-    name: Validate conda environment
+    name: validate
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -15,18 +15,22 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest", "macos-latest", "windows-latest"]
-        python-version: ['3.7', '3.8']
-    steps:    
-      - uses: actions/checkout@v3
-      - uses: conda-incubator/setup-miniconda@v2
+        #python-version: ['3.7', '3.8']
+    steps:  
+      - name: Clone repo  
+        uses: actions/checkout@v3
+      - name: Setup conda
+        uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: torchgeo
           auto-update-conda: false
           channels: conda-forge
           channel-priority: strict
           environment-file: environment.yml
-          python-version: ${{ matrix.python-version }}
-          
+          python-version: 3.7 
       - run: |
           conda info
           conda list
+      - name: Test imports
+        run: |
+          python -c "import torchgeo"
