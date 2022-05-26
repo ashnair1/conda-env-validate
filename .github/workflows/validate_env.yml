@@ -31,6 +31,3 @@ jobs:
       - run: |
           conda info
           conda list
-      - name: Test imports
-        run: |
-          python -c "import torchgeo"
