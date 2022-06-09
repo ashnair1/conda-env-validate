@@ -24,7 +24,7 @@ jobs:
         with:
           activate-environment: torchgeo
           auto-update-conda: false
-          channels: conda-forge
+          channels: pytorch,conda-forge,esri,open3d-admin
           channel-priority: strict
           environment-file: environment.yml
           python-version: 3.7 
